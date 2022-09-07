@@ -1,0 +1,26 @@
+{
+	"ronaldo": {
+		"name": "호날두",
+		"password": "7777",
+		"gender": "여자"
+	},
+	"messi": {
+		"name": "메시",
+		"password": "1010",
+		"gender": "남자"
+	},
+	"zlatan": {
+		"name": "즐라탄",
+		"password": "9999",
+		"gender": "남자"
+	},
+	"torres": {
+		"name": "토레스",
+		"password": "6666",
+		"gender": "여자"
+	},
+	"haaland": {
+		"password": "9109",
+		"name": "홀란"
+	}
+}
