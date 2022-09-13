@@ -81,8 +81,61 @@ module.exports = (app, fs) => {
                         res.json(result);
                     }
                 });
+            }
+        });
+    });
 
+    app.put('/updateMember/:userid', (req, res) => {
+        const result ={};
+        const userid = req.params.userid;
+        if(!req.body["password"] || !req.body["name"]){
+            result["code"] = 100; // 100 : 실패로 임의로 지정
+            result["msg"] = "매개변수가 전달되지 않음"; 
+            res.json(result);
+            return false;
+        }
+        fs.readFile(__dirname+"/../data/member.json", "utf8", (err, data) => {
+            if(err){
+                console.log(err);
+            }else{
+                const member = JSON.parse(data);
+                member[userid] = req.body; // 데이터 갱신 
+                fs.writeFile(__dirname+"/../data/member.json", JSON.stringify(member, null, '\t'), 'utf8', (err, data) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result["code"] = 200; // 200 : 성공시 보내줄 코드를 임의로 지정
+                        result["msg"] = "수정 성공"; 
+                        res.json(result);
+                    }
+                });
+            }
+        })
+    });
 
+    app.delete('/deleteMember/:userid', (req, res) => {
+        const result = {};
+        fs.readFile(__dirname + "/../data/member.json", "utf8", (err, data) => {
+            if(err){
+                console.log(err);
+            }else{
+                const member = JSON.parse(data);
+                if(!member[req.params.userid]){
+                    result["code"] = 102; // 102 : 사용자가 없을 경우 보내줄 코드를 임의로 지정
+                    result["msg"] = "사용자를 찾을 수 없음"; 
+                    res.json(result);
+                    return false;
+                }
+                delete member[req.params.userid]; // 객체에서 지운다
+                fs.writeFile(__dirname+"/../data/member.json", JSON.stringify(member, null, '\t'), 'utf8', (err, data) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        result["code"] = 200; // 200 : 성공시 보내줄 코드를 임의로 지정
+                        result["msg"] = "삭제 성공"; 
+                        res.json(result);
+                    }
+                });
             }
         })
     })

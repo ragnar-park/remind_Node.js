@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // http://127.0.0.1:3000/mail
 router.route('/mail').get((req, res) => {
-    fs.readFile('mail.html', 'utf8', (err, data) => {
+    fs.readFile(__dirname+'/html/mail.html', 'utf8', (err, data) => {
         if(err){
             console.log(err);
         }else{
