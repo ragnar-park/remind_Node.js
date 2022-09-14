@@ -4,7 +4,7 @@
   "description": "remindNodeJs package.json",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon 24_cookie2.js"
+    "start": "nodemon 25_session.js"
   },
   "author": "ragnar",
   "license": "ISC",
@@ -12,6 +12,7 @@
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
+    "express-session": "^1.17.3",
     "nodemailer": "^6.7.8"
   }
 }
