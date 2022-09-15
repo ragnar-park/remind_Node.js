@@ -1,0 +1,218 @@
+> show dbs;
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> use frontend;
+switched to db frontend
+> show dbs;
+admin   0.000GB
+config  0.000GB
+local   0.000GB
+> db.createCollection('testCollection');
+{ "ok" : 1 }
+> show collections;
+testCollection
+> db.testCollection.drop();
+true
+> show collections;
+> db.createCollection('member');
+{ "ok" : 1 }
+> show collections;
+member
+> db.member.insert({'userid':'ronaldo','userpw':'7777'});
+WriteResult({ "nInserted" : 1 })
+> db.member.find();
+{ "_id" : ObjectId("632318389a56e6cabda87795"), "userid" : "ronaldo", "userpw" : "7777" }
+> db.member.insert({'userid':'messi','name':'메시','gender':'남자'});
+WriteResult({ "nInserted" : 1 })
+> db.member.find();                                              '});
+{ "_id" : ObjectId("632318389a56e6cabda87795"), "userid" : "ronaldo", "userpw" : "7777" }
+{ "_id" : ObjectId("632319849a56e6cabda87796"), "userid" : "messi", "name" : "메시", "gender" : "남자" }
+> db.member.insert({'userid':'haaland','userpw':'9999','name':'홀란드','position':'ST'});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'mbappe','userpw':'1010','name':'음바페','position':'LW','score':15});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'neymar','userpw':'1234','name':'네이마르','position':'CAM','score':7});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'minjae','userpw':'3333','name':'김민재','position':'CB','score':3});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'foden','userpw':'4747','name':'포든','position':'LW','score':8});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'james','userpw':'2424','name':'제임스','position':'RB','score':12});
+WriteResult({ "nInserted" : 1 })
+> db.member.insert({'userid':'degea','userpw':'1111','name':'데헤아','position':'GK','score':0});
+WriteResult({ "nInserted" : 1 })
+> db.member.find().pretty();
+{
+        "_id" : ObjectId("632318389a56e6cabda87795"),
+        "userid" : "ronaldo",
+        "userpw" : "7777"
+}
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "name" : "메시",
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("63231c0d9a56e6cabda87797"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : ST
+}
+{
+        "_id" : ObjectId("63231c129a56e6cabda87798"),
+        "userid" : "mbappe",
+        "userpw" : "1010",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231c179a56e6cabda87799"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231c1b9a56e6cabda8779a"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231c1f9a56e6cabda8779b"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+{
+        "_id" : ObjectId("63231c239a56e6cabda8779c"),
+        "userid" : "james",
+        "userpw" : "2424",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+{
+        "_id" : ObjectId("63231c269a56e6cabda8779d"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}
+> db.member.find({'userid':'foden'}).pretty();
+{
+        "_id" : ObjectId("63231c1f9a56e6cabda8779b"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+> db.member.find({'score':{$gte:10}})
+{ "_id" : ObjectId("63231e6b9a56e6cabda8779f"), "userid" : "mbappe", "userpw" : "1010", "name" : "음바페", "position" :
+"LW", "score" : 15 }
+{ "_id" : ObjectId("63231e7d9a56e6cabda877a3"), "userid" : "james", "userpw" : "2424", "name" : "제임스", "position" : "
+RB", "score" : 12 }
+> db.member.find({'score':{$gte:10}}).pretty()
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1010",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "2424",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+> db.member.find({$and:[{'userid':'minjae'},{'userpw':'3333'}]}).pretty()
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+> db.member.find({'name':'홀란드'}).pretty()
+{
+        "_id" : ObjectId("63231e5d9a56e6cabda8779e"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+> db.member.find({'score':{$lte:8}}).pretty()
+{
+        "_id" : ObjectId("63231e719a56e6cabda877a0"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231e799a56e6cabda877a2"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+{
+        "_id" : ObjectId("63231e809a56e6cabda877a4"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}
+> db.member.find({$or:[{'userid':'mbappe'},{'userid':'james'}]}).pretty()
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1010",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "2424",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+> db.member.find({$and:[{'position':'LW'},{'score': {$gte:12}}]}).pretty()
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1010",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
