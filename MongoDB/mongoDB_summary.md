@@ -87,7 +87,7 @@ db.member.find().pretty();
 
 - db.컬렉션명.find(객체).pretty();
 ```
-db.member.find({"userid":"apple"}).pretty();
+db.member.find({"userid":"haaland"}).pretty();
 ```
 >_id는 각 document의 유일한 키로 쓰이는 값
 
@@ -139,6 +139,90 @@ db.member.find({$or:[{'userid':'mbappe'},{'userid':'james'}]}).pretty()
 ```
 db.member.find({$and:[{'position':'LW'},{'score': {$gte:12}}]}).pretty()
 ```
+
+### document의 정렬 
+- db.컬렉션명.find().sort(객체)
+- 객체
+{key : value} -> key는 데이터의 field이름, value의 값는 1(오름차순) 또는 -1(내림차순)
+- 여러 key를 입력할 수 있고, 먼저 입력한 key가 우선권을 갖음 
+```
+db.member.find().sort({"_id":-1}).pretty();
+```
+
+### document의 개수 제한
+- limit() : 출력할 데이터 개수를 제한할 떄 사용
+- db.컬렉션명.find().limit(출력할 개수)
+```
+db.member.find().limit(3).pretty();
+```
+
+### document 데이터 생략 후 출력
+skip() : 출력할 데이터의 시작부분을 설정할 경우 사용
+db.컬렉션명.find().skip(생략할 개수);
+```
+db.member.find().skip(2).pretty();
+```
+
+### document의 수정
+
+
+
+1. 특정  field 업데이트 
+    - db.컬렉션명.update(객체, {$set: 바뀔객체});
+     ```
+      db.member.update({"userid":"ronaldo"},{$set:{name:"우리형"}}); 
+     ```
+     - $set 
+        - document에서 특정 키의 값을 수정 
+        - 특정 키가 존재하지 않다면 새롭게 생성
+        - 특정 키의 데이터형도 수정할 수 있습니다.
+
+
+2. documnet.replace
+- db.컬렉션명.update(변경할 객체, 바뀔 객체);
+```
+db.member.update({"_id":ObjectId("632319849a56e6cabda87796")},  {'userid':'messi','userpw':'101010','name':'리오넬메시','position':'RW','score':281, 'gender':'남자'});
+```
+- document replace는 _id가 바뀌지 않음
+
+3. 특정 field 제거
+- db.컬렉션명.update(변경할 객체, {$unset:{제거할 객체}});
+```
+db.member.update({name:"네이마르"}, {$unset:{score:1}});
+```
+- $unset :  document에서 특정 키와 값을 모두 제거 
+- point:1
+    - 1 -> true의 의미 
+
+4. 특정 document가 존재하지 않을 경우 새로 추가 
+db.컬렉션명.update(추가할 객체, 추가할 객체 .., {upset: true});
+```
+db.member.update({userid:"foden"}, {$set: {"assist":"53","game":135}}, {upsert:true});
+```
+- $upsert : 데이터가 있으면 업데이트 없으면 insert를 한다. 기본값 false
+
+5. 여러 document의 특정 field를 수정 
+- db.컬렉션명.update(적용할 객체, $set:{수정할 객체}, {multi: true});
+>  score가 12보다 크거나 같은 document의 비밀번호를 모두 "1111"로 설정 
+```
+db.member.update({score: {$gte: 12}}, {$set:{"userpw" : "1111"}}, {multi: true});
+```
+
+6. document의 삭제 
+- db.컬렉션명.remove(객체)
+```
+db.member.remove({"_id":ObjectId("632318389a56e6cabda87795")});
+```
+
+### mongoDB와 Node.js 연결
+
+```
+npm i mongodb
+```
+
+
+
+
 
 
 

@@ -216,3 +216,304 @@ RB", "score" : 12 }
         "position" : "LW",
         "score" : 15
 }
+> db.member.find().sort({"_id":-1}).pretty();
+{
+        "_id" : ObjectId("63231e809a56e6cabda877a4"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "2424",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+{
+        "_id" : ObjectId("63231e799a56e6cabda877a2"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231e719a56e6cabda877a0"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1010",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e5d9a56e6cabda8779e"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "name" : "메시",
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("632318389a56e6cabda87795"),
+        "userid" : "ronaldo",
+        "userpw" : "7777"
+}
+> db.member.find().limit(3).pretty();
+{
+        "_id" : ObjectId("632318389a56e6cabda87795"),
+        "userid" : "ronaldo",
+        "userpw" : "7777"
+}
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "name" : "메시",
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("63231c0d9a56e6cabda87797"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+> db.member.update({"_id":ObjectId("632319849a56e6cabda87796")},  {'userid':'messi','userpw':'101010','name':'리오넬메시','position':'RW','score':281, 'gender':'남자'});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.member.find({"userid":"messi"})
+{ "_id" : ObjectId("632319849a56e6cabda87796"), "userid" : "messi", "userpw" : "101010", "name" : "리오넬메시", "position" : "RW", "score" : 281, "gender" : "남자" }
+> db.member.update({name:"네이마르"}, {$unset:{"score":1}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.member.find({"name":"네이마르"});
+{ "_id" : ObjectId("63231c179a56e6cabda87799"), "userid" : "neymar", "userpw" : "1234", "name" : "네이마르", "position" : "CAM" }
+>
+> db.member.update({userid:"foden"}, {$set: {"assist":"53","game":135}}, {upsert:true});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.member.find().pretty();
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "userpw" : "1111",
+        "name" : "리오넬메시",
+        "position" : "RW",
+        "score" : 281,
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("63231e5d9a56e6cabda8779e"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1111",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e719a56e6cabda877a0"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231e799a56e6cabda877a2"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8,
+        "assist" : "53",
+        "game" : 135
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "1111",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+{
+        "_id" : ObjectId("63231e809a56e6cabda877a4"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}
+> db.member.update({score: {$gte: 12}}, {$set:{"userpw" : "1111"}}, {multi: true});
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 3 })
+> db.member.find({userpw: {"1111"}).pretty();                                                                                                                                      남자'});
+{
+        "_id" : ObjectId("632318389a56e6cabda87795"),
+        "userid" : "ronaldo",
+        "userpw" : "7777"
+}
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "userpw" : "1111",
+        "name" : "리오넬메시",
+        "position" : "RW",
+        "score" : 281,
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("63231c0d9a56e6cabda87797"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1111",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e719a56e6cabda877a0"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231e799a56e6cabda877a2"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "1111",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+{
+        "_id" : ObjectId("63231e809a56e6cabda877a4"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}
+> db.member.find().pretty();
+{
+        "_id" : ObjectId("632319849a56e6cabda87796"),
+        "userid" : "messi",
+        "userpw" : "1111",
+        "name" : "리오넬메시",
+        "position" : "RW",
+        "score" : 281,
+        "gender" : "남자"
+}
+{
+        "_id" : ObjectId("63231e5d9a56e6cabda8779e"),
+        "userid" : "haaland",
+        "userpw" : "9999",
+        "name" : "홀란드",
+        "position" : "ST"
+}
+{
+        "_id" : ObjectId("63231e6b9a56e6cabda8779f"),
+        "userid" : "mbappe",
+        "userpw" : "1111",
+        "name" : "음바페",
+        "position" : "LW",
+        "score" : 15
+}
+{
+        "_id" : ObjectId("63231e719a56e6cabda877a0"),
+        "userid" : "neymar",
+        "userpw" : "1234",
+        "name" : "네이마르",
+        "position" : "CAM",
+        "score" : 7
+}
+{
+        "_id" : ObjectId("63231e769a56e6cabda877a1"),
+        "userid" : "minjae",
+        "userpw" : "3333",
+        "name" : "김민재",
+        "position" : "CB",
+        "score" : 3
+}
+{
+        "_id" : ObjectId("63231e799a56e6cabda877a2"),
+        "userid" : "foden",
+        "userpw" : "4747",
+        "name" : "포든",
+        "position" : "LW",
+        "score" : 8
+}
+{
+        "_id" : ObjectId("63231e7d9a56e6cabda877a3"),
+        "userid" : "james",
+        "userpw" : "1111",
+        "name" : "제임스",
+        "position" : "RB",
+        "score" : 12
+}
+{
+        "_id" : ObjectId("63231e809a56e6cabda877a4"),
+        "userid" : "degea",
+        "userpw" : "1111",
+        "name" : "데헤아",
+        "position" : "GK",
+        "score" : 0
+}

@@ -8,7 +8,7 @@ const port = 3000;
 // urlencoded() 
 // {extends:false}
 // 중첩된 객체표현을 허용할지 여부를 체크 
-// - body0parser를 사용하면 자동으로 req에 body속성이 추가되고 저장됨
+// - body-parser를 사용하면 자동으로 req에 body속성이 추가되고 저장됨
 // - 인코딩이 기본적으로 utf-8임
 // URL 파싱
 // qs
