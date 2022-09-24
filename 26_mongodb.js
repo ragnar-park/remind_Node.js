@@ -111,7 +111,60 @@ router.route('/member/edit').put((req, res) => {
     console.log(`userid: ${userid}, userpw:${userpw}, name:${name}, position:${position}`)
     if(database){
         editMember(database, userid, userpw, name, position, (err, result) => {
+            if(err){
+                res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                res.write('<h2>회원정보 수정 실패</h2>');
+                res.write('<p>오류가 발생했습니다.</p>');
+                res.end();
+            }else{
+                if(result.modifiedCount > 0){
+                    res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                    res.write('<h2>회원정보 수정 성공</h2>');
+                    res.write('<p>정보 수정 성공했습니다.</p>');
+                    res.end();
+                }else{
+                    res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                    res.write('<h2>회원정보 수정 실패</h2>');
+                    res.write('<p>정보 수정 실패했습니다.</p>');
+                    res.end();
+                }
+            }
+        });
+    }else{
+        res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+        res.write('<h2>데이터베이스 연결 실패</h2>');
+        res.write('<p>mongodb 데이터베이스에 연결하지 못했습니다.</p>');
+        res.end();
+    }
+});
 
+// 회원 삭제 
+// http://127.0.0.1/member/delete (delete)
+router.route('/member/delete').delete((req, res) => {
+    console.log('/member/delete 호출 !');
+    const userid = req.body.userid;
+
+    console.log(`userid:${userid}`);
+    if(database){
+        deleteMember(database, userid, (err, result) => {
+            if(err){
+                res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                res.write('<h2>회원 삭제 실패</h2>');
+                res.write('<p>오류가 발생했습니다.</p>');
+                res.end();
+            }else{
+                if(result.deletedCount > 0){
+                    res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                    res.write('<h2>회원 삭제 성공</h2>');
+                    res.write('<p>회원 삭제 성공했습니다.</p>');
+                    res.end();
+                }else{
+                    res.writeHead('200', {'content-type':'text/html;charset=utf8'});
+                    res.write('<h2>회원 삭제 실패</h2>');
+                    res.write('<p>회원 삭제 실패했습니다.</p>');
+                    res.end();
+                }
+            }
         });
     }else{
         res.writeHead('200', {'content-type':'text/html;charset=utf8'});
@@ -184,6 +237,27 @@ const editMember = function(database, userid, userpw, name, position, callback){
             callback(null,result)
         }
     });
+}
+
+const deleteMember = function(database, userid, callback){
+    console.log('deleteMember 호출!'); 
+    const members = database.collection('member');
+
+    // 객체로 데이터 하나를 삭제하는 메소드
+    members.deleteOne({userid:userid}, (err, result) => {
+        if(err){
+            console.log(err);
+            callback(err, null);
+            return;
+        }else{
+            if(result.deletedCount > 0){
+                console.log(`사용자가 document ${result.deletedCount}명 삭제되었습니다.`);
+            }else{
+                console.log('삭제된 사용자가 없습니다.')
+            }
+            callback(null, result);
+        }
+    }); 
 }
 
 // mongodb 연결 함수
