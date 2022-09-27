@@ -56,8 +56,35 @@ const upload = multer({
 router.route('/write').post(upload.array('photo', 1), (req, res) => {
     try{
         const files = req.files; 
-        console.dir(req.file[0]);
+        console.dir(req.files[0]);
 
+        let originalname = '';
+        let filename = '';
+        let mimetype = '';
+        let size = 0;
+
+        if(Array.isArray(files)){
+            console.log(`클라이언트에서 받아온 파일 개수 : ${files.length}`);
+            for(let i=0; i<files.length; i++){
+                originalname = files[i].originalname;
+                filename = files[i].filename;
+                mimetype = files[i].mimetype;
+                size = files[i].size;
+            }
+        }
+
+        const title = req.body.title;
+
+        res.writeHead('200', {'Content-Type':'text/html;charset=utf8'});
+        res.write('<h2>이미지 업로드 성공</h2>');
+        res.write('<hr/>');
+        res.write(`<p>제목 : ${title}</p>`);
+        res.write(`<p>원본파일명 : ${originalname}</p>`);
+        res.write(`<p>현재파일명 : ${filename}</p>`);
+        res.write(`<p>MimeType : ${mimetype}</p>`);
+        res.write(`<p>파일크기 : ${size}</p>`);
+        res.write(`<p><img src='/uploads/${filename}' width=200> </p>`);
+        res.end();
     }catch(e){
         console.log(e);
     }
